@@ -1,15 +1,17 @@
 
+# -- Imports --
+from abc import ABC, abstractmethod
 
-class Link:
+
+class Link(ABC):
     
     def __init__(self, next) -> None:
         self.next = next
         return None
     
+    @abstractmethod
     def run(self):
-        return self.next()
-    
-
+        pass
 
 
 class Last:

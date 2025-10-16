@@ -12,3 +12,6 @@ class Model:
     
     def telaInsertChain(self, dado):
         pass
+
+    def telaGrafChain(self):
+        pass
