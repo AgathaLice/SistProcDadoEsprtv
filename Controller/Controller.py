@@ -1,6 +1,9 @@
 
 class Controller:
     
-    def __init__(self, view, model) -> None:
-        self.view = view
+    def __init__(self, model) -> None:
+        
         self.model = model
+    
+    def sair(self, e) -> None:
+        self.model.sair(e)
