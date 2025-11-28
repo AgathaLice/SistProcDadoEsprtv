@@ -16,17 +16,34 @@ class View():
     def __init__(self, controller) -> None:
 
         self.controller = controller
+        self.load = False
         
         self.root = ctk.CTk()
         self.root.title("Queimada") #provisório
         self.root.geometry("400x150") #vai ser zoomed dps
 
         self.telaMenu()
+        self.telaInsertEdit()
+        #self.telaLoad()
+        self.telaData()
+        self.telaList()
+        
+        self.root.bind("<Escape>", self.sair)
 
         self.root.mainloop()
 
     def telaMenu(self) -> None:
-            return None
+        
+        menu = ctk.CTkFrame(self.root)
+
+        menu.columnconfigure([0, 2],
+                             weight=1)
+        menu.columnconfigure(1,
+                             weight=1)
+        menu.rowconfigure([0, 3],
+                          weight=3)
+        menu.rowconfigure([1, 2],
+                          weight=1)
         
     def telaInsertEdit(self) -> None:
             return None
