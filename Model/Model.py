@@ -2,7 +2,7 @@
 # -- Imports --
 from sys import exit
 import pymongo as mog
-from Chain import Link, Last
+from Model.Chain import Link, Last
 #* matplotlib e kmeans
 
 class Model:
