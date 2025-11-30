@@ -96,7 +96,7 @@ class View():
             distFr, text='Distância em Salto Horizontal:')
         distEmSaltoHorzEnt = ctk.CTkEntry(distFr)
         insertEditBtsFr = ctk.CTkFrame(self.insertEdit)
-        cancelar = ctk.CTkButton(insertEditBtsFr, text='Cancelar')
+        cancelar = ctk.CTkButton(insertEditBtsFr, text='Cancelar', command=lambda: self.menu.tkraise())
         salvar = ctk.CTkButton(insertEditBtsFr, text='Salvar')
 
         titulo.grid(row=0, column=0, columnspan=1)
@@ -158,20 +158,38 @@ class View():
                                    weight=1)
         self.lista.columnconfigure(2,
                                    weight=7)
+        atletas = self.controller.todosOsAtletas()
 
         menu = ctk.CTkButton(self.lista, text="Menu",
                              command=lambda: self.menu.tkraise())
         titulo = ctk.CTkLabel(self.lista, text="Listagem")
         newAtleta = ctk.CTkButton(self.lista, text="Novo Atleta",
-                                 command=lambda: self.insertEdit.tkraise())
-        listagemFr = ctk.CTkScrollableFrame(self.lista) #!IMPORTANTE
-
+                                  command=lambda: self.insertEdit.tkraise())
+        scrollFr = ctk.CTkScrollableFrame(self.lista) #! IMPORTANTE
+        scrollFr.columnconfigure([0, 3],
+                                 weight=1)
+        scrollFr.columnconfigure(1,
+                                 weight=6)
+        scrollFr.columnconfigure(2,
+                                 weight=2)
+        index = 0
+        for atleta in atletas:
+            atletaLbl = ctk.CTkLabel(scrollFr,
+                        text=f'{atleta['nome']} - {atleta['idade']} anos')
+            atletaLbl.bind("<Button-1>",
+                lambda event, id=atleta['_id']: self.editarAtleta(id, event))
+            atletaLbl.grid(row=index, column=1)
+            index += 1
         
 
         menu.grid(row=1, column=1)
         titulo.grid(row=1, column=2, sticky='nsw')
         newAtleta.grid(row=2, column=1)
-        listagemFr.grid(row=3, column=1, columnspan=2, sticky='nsew')
+        scrollFr.grid(row=3, column=1, columnspan=2, sticky='nsew')
+    
+    def editarAtleta(self, id, event) -> None: #! FIX
+        print(id)
+        return None
 
     def raiseInsertEdit(self, nome) -> None:  # TODO
         return None

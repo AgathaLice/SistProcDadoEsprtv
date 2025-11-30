@@ -5,7 +5,7 @@ class Controller:
         
         self.model = model
 
-    def todosOsAtletas(self) -> list[dict] | None:
+    def todosOsAtletas(self) -> list[dict]:
         return self.model.todosOsAtletas()
     
     def sair(self, e) -> None:
