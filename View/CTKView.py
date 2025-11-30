@@ -67,11 +67,11 @@ class View():
         self.insertEdit.grid(row=0, column=0, sticky='nsew')
 
         self.insertEdit.columnconfigure([0, 1],
-                                  weight=1)
+                                        weight=1)
         self.insertEdit.rowconfigure(0,
-                               weight=3)
+                                     weight=3)
         self.insertEdit.rowconfigure([1, 2, 3, 4, 5, 6],
-                               weight=1)
+                                     weight=1)
 
         titulo = ctk.CTkLabel(self.insertEdit, text='Insira suas Informações')
         nomeFr = ctk.CTkFrame(self.insertEdit)
@@ -84,13 +84,16 @@ class View():
         flexibilidadeLbl = ctk.CTkLabel(flexFr, text='Flexibilidade:')
         flexibilidadeEnt = ctk.CTkEntry(flexFr)
         abdomFr = ctk.CTkFrame(self.insertEdit)
-        abdominaisEmUmMinLbl = ctk.CTkLabel(abdomFr, text='Abdominais em Um Minuto:')
+        abdominaisEmUmMinLbl = ctk.CTkLabel(
+            abdomFr, text='Abdominais em Um Minuto:')
         abdominaisEmUmMinEnt = ctk.CTkEntry(abdomFr)
         arremFr = ctk.CTkFrame(self.insertEdit)
-        arremecoDeBolaMedLbl = ctk.CTkLabel(arremFr, text='Distância do Arremeço de Bola Medicinal:')
+        arremecoDeBolaMedLbl = ctk.CTkLabel(
+            arremFr, text='Distância do Arremeço de Bola Medicinal:')
         arremecoDeBolaMedEnt = ctk.CTkEntry(arremFr)
         distFr = ctk.CTkFrame(self.insertEdit)
-        distEmSaltoHorzLbl = ctk.CTkLabel(distFr, text='Distância em Salto Horizontal:')
+        distEmSaltoHorzLbl = ctk.CTkLabel(
+            distFr, text='Distância em Salto Horizontal:')
         distEmSaltoHorzEnt = ctk.CTkEntry(distFr)
         insertEditBtsFr = ctk.CTkFrame(self.insertEdit)
         cancelar = ctk.CTkButton(insertEditBtsFr, text='Cancelar')
@@ -146,6 +149,29 @@ class View():
     def telaLista(self) -> None:
         self.lista = ctk.CTkFrame(self.root)
         self.lista.grid(row=0, column=0, sticky='nsew')
+
+        self.lista.rowconfigure([0, 1, 2, 4],
+                                weight=1)
+        self.lista.rowconfigure(3,
+                                weight=6)
+        self.lista.columnconfigure([0, 1, 3],
+                                   weight=1)
+        self.lista.columnconfigure(2,
+                                   weight=7)
+
+        menu = ctk.CTkButton(self.lista, text="Menu",
+                             command=lambda: self.menu.tkraise())
+        titulo = ctk.CTkLabel(self.lista, text="Listagem")
+        newAtleta = ctk.CTkButton(self.lista, text="Novo Atleta",
+                                 command=lambda: self.insertEdit.tkraise())
+        listagemFr = ctk.CTkScrollableFrame(self.lista) #!IMPORTANTE
+
+        
+
+        menu.grid(row=1, column=1)
+        titulo.grid(row=1, column=2, sticky='nsw')
+        newAtleta.grid(row=2, column=1)
+        listagemFr.grid(row=3, column=1, columnspan=2, sticky='nsew')
 
     def raiseInsertEdit(self, nome) -> None:  # TODO
         return None
