@@ -8,5 +8,10 @@ class Controller:
     def todosOsAtletas(self) -> list[dict]:
         return self.model.todosOsAtletas()
     
+    def salvar(self, atleta) -> None:
+        # self.model.salvar(atleta)
+        print(atleta)
+        return None
+    
     def sair(self, e) -> None:
         self.model.sair(e)

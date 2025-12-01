@@ -14,7 +14,7 @@ class Link(ABC):
         pass
 
 
-class Last:
+class Last(Link):
     
     def __init__(self, retorno):
         return retorno

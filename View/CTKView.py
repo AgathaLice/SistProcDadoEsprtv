@@ -76,48 +76,50 @@ class View():
         titulo = ctk.CTkLabel(self.insertEdit, text='Insira suas Informações')
         nomeFr = ctk.CTkFrame(self.insertEdit)
         nomeLbl = ctk.CTkLabel(nomeFr, text='Nome:')
-        nomeEnt = ctk.CTkEntry(nomeFr)
+        self.nomeEnt = ctk.CTkEntry(nomeFr)
         idadeFr = ctk.CTkFrame(self.insertEdit)
         idadeLbl = ctk.CTkLabel(idadeFr, text='Idade:')
-        idadeEnt = ctk.CTkEntry(idadeFr)
+        self.idadeEnt = ctk.CTkEntry(idadeFr)
         flexFr = ctk.CTkFrame(self.insertEdit)
         flexibilidadeLbl = ctk.CTkLabel(flexFr, text='Flexibilidade:')
-        flexibilidadeEnt = ctk.CTkEntry(flexFr)
+        self.flexibilidadeEnt = ctk.CTkEntry(flexFr)
         abdomFr = ctk.CTkFrame(self.insertEdit)
         abdominaisEmUmMinLbl = ctk.CTkLabel(
             abdomFr, text='Abdominais em Um Minuto:')
-        abdominaisEmUmMinEnt = ctk.CTkEntry(abdomFr)
+        self.abdominaisEmUmMinEnt = ctk.CTkEntry(abdomFr)
         arremFr = ctk.CTkFrame(self.insertEdit)
         arremecoDeBolaMedLbl = ctk.CTkLabel(
             arremFr, text='Distância do Arremeço de Bola Medicinal:')
-        arremecoDeBolaMedEnt = ctk.CTkEntry(arremFr)
+        self.arremecoDeBolaMedEnt = ctk.CTkEntry(arremFr)
         distFr = ctk.CTkFrame(self.insertEdit)
         distEmSaltoHorzLbl = ctk.CTkLabel(
             distFr, text='Distância em Salto Horizontal:')
-        distEmSaltoHorzEnt = ctk.CTkEntry(distFr)
+        self.distEmSaltoHorzEnt = ctk.CTkEntry(distFr)
         insertEditBtsFr = ctk.CTkFrame(self.insertEdit)
-        cancelar = ctk.CTkButton(insertEditBtsFr, text='Cancelar', command=lambda: self.menu.tkraise())
-        salvar = ctk.CTkButton(insertEditBtsFr, text='Salvar')
+        cancelar = ctk.CTkButton(
+            insertEditBtsFr, text='Cancelar', command=self.fecharInsert)
+        salvar = ctk.CTkButton(
+            insertEditBtsFr, text='Salvar', command=self.salvar)
 
         titulo.grid(row=0, column=0, columnspan=1)
         nomeFr.grid(row=1, column=0, sticky='nse')
         nomeLbl.pack()
-        nomeEnt.pack()
+        self.nomeEnt.pack()
         idadeFr.grid(row=1, column=1)
         idadeLbl.pack()
-        idadeEnt.pack()
+        self.idadeEnt.pack()
         flexFr.grid(row=2, column=0, sticky='nse')
         flexibilidadeLbl.pack()
-        flexibilidadeEnt.pack()
+        self.flexibilidadeEnt.pack()
         abdomFr.grid(row=3, column=0, sticky='nse')
         abdominaisEmUmMinLbl.pack()
-        abdominaisEmUmMinEnt.pack()
+        self.abdominaisEmUmMinEnt.pack()
         arremFr.grid(row=4, column=0, sticky='nse')
         arremecoDeBolaMedLbl.pack()
-        arremecoDeBolaMedEnt.pack()
+        self.arremecoDeBolaMedEnt.pack()
         distFr.grid(row=5, column=0, sticky='nse')
         distEmSaltoHorzLbl.pack()
-        distEmSaltoHorzEnt.pack()
+        self.distEmSaltoHorzEnt.pack()
         insertEditBtsFr.grid(row=6, column=1, sticky='nsw')
         cancelar.pack()
         salvar.pack()
@@ -165,7 +167,7 @@ class View():
         titulo = ctk.CTkLabel(self.lista, text="Listagem")
         newAtleta = ctk.CTkButton(self.lista, text="Novo Atleta",
                                   command=lambda: self.insertEdit.tkraise())
-        scrollFr = ctk.CTkScrollableFrame(self.lista) #! IMPORTANTE
+        scrollFr = ctk.CTkScrollableFrame(self.lista)  # ! IMPORTANTE
         scrollFr.columnconfigure([0, 3],
                                  weight=1)
         scrollFr.columnconfigure(1,
@@ -175,19 +177,39 @@ class View():
         index = 0
         for atleta in atletas:
             atletaLbl = ctk.CTkLabel(scrollFr,
-                        text=f'{atleta['nome']} - {atleta['idade']} anos')
+                                     text=f'{atleta['nome']} - {atleta['idade']} anos')
             atletaLbl.bind("<Button-1>",
-                lambda event, id=atleta['_id']: self.editarAtleta(id, event))
+                           lambda event, id=atleta['_id']: self.editarAtleta(id, event))
             atletaLbl.grid(row=index, column=1)
             index += 1
-        
 
         menu.grid(row=1, column=1)
         titulo.grid(row=1, column=2, sticky='nsw')
         newAtleta.grid(row=2, column=1)
         scrollFr.grid(row=3, column=1, columnspan=2, sticky='nsew')
-    
-    def editarAtleta(self, id, event) -> None: #! FIX
+
+    def salvar(self) -> None:
+        atleta = Atleta(
+            self.nomeEnt.get(),
+            self.idadeEnt.get(),
+            self.flexibilidadeEnt.get(),
+            self.abdominaisEmUmMinEnt.get(),
+            self.arremecoDeBolaMedEnt.get(),
+            self.distEmSaltoHorzEnt.get()
+        )
+        self.controller.salvar(atleta)
+        self.fecharInsert()
+
+    def fecharInsert(self) -> None:
+        self.nomeEnt.delete(0, ctk.END)
+        self.idadeEnt.delete(0, ctk.END)
+        self.flexibilidadeEnt.delete(0, ctk.END)
+        self.abdominaisEmUmMinEnt.delete(0, ctk.END)
+        self.arremecoDeBolaMedEnt.delete(0, ctk.END)
+        self.distEmSaltoHorzEnt.delete(0, ctk.END)
+        self.menu.tkraise()
+
+    def editarAtleta(self, id, event) -> None:  # ! FIX
         print(id)
         return None
 
@@ -198,7 +220,7 @@ class View():
         self.controller.sair(e)
 
 
-class Atleta():
+class Atleta:
 
     def __init__(self, nome, idade,
                  flexibilidade,
