@@ -1,5 +1,4 @@
 
-# -- Imports --
 from abc import ABC, abstractmethod
 
 
@@ -10,11 +9,11 @@ class Link(ABC):
         return None
     
     @abstractmethod
-    def run(self):
+    def run(self, data):
         pass
 
 
 class Last(Link):
     
-    def __init__(self, retorno):
-        return retorno
+    def __init__(self, *args):
+        return args
