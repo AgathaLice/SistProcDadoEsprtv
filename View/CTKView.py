@@ -154,33 +154,26 @@ class View():
                                    weight=1)
         self.lista.columnconfigure(2,
                                    weight=7)
-        atletas = self.controller.todosOsAtletas()
 
         menu = ctk.CTkButton(self.lista, text="Menu",
                              command=lambda: self.menu.tkraise())
         titulo = ctk.CTkLabel(self.lista, text="Listagem")
         newAtleta = ctk.CTkButton(self.lista, text="Novo Atleta",
                                   command=lambda: self.insertEdit.tkraise())
-        scrollFr = ctk.CTkScrollableFrame(self.lista)  # ! IMPORTANTE
-        scrollFr.columnconfigure([0, 3],
+        self.scrollFr = ctk.CTkScrollableFrame(self.lista)  # ! IMPORTANTE
+        self.scrollFr.columnconfigure([0, 3],
                                  weight=1)
-        scrollFr.columnconfigure(1,
+        self.scrollFr.columnconfigure(1,
                                  weight=6)
-        scrollFr.columnconfigure(2,
+        self.scrollFr.columnconfigure(2,
                                  weight=2)
-        index = 0
-        for atleta in atletas:
-            atletaLbl = ctk.CTkLabel(scrollFr,
-                                     text=f'{atleta['nome']}')
-            atletaLbl.bind("<Button-1>",
-                           lambda event, id=atleta['_id']: self.editarAtleta(id, event))
-            atletaLbl.grid(row=index, column=1)
-            index += 1
+        
+        self.buildScrllFr()
 
         menu.grid(row=1, column=1)
         titulo.grid(row=1, column=2, sticky='nsw')
         newAtleta.grid(row=2, column=1)
-        scrollFr.grid(row=3, column=1, columnspan=2, sticky='nsew')
+        self.scrollFr.grid(row=3, column=1, columnspan=2, sticky='nsew')
 
     def salvar(self) -> None:
         atleta = Atleta(
@@ -200,9 +193,38 @@ class View():
         self.arremecoDeBolaMedEnt.delete(0, ctk.END)
         self.distEmSaltoHorzEnt.delete(0, ctk.END)
         self.menu.tkraise()
+    
+    def updateLista(self):
+        for label in self.scrollFr.winfo_children():
+            label.destroy()
+        self.buildScrllFr()
+    
+    def buildScrllFr(self):
+        atletas = self.controller.todosOsAtletas()
+        index = 0
+        for atleta in atletas:
+            atletaLbl = ctk.CTkLabel(self.scrollFr,
+                                     text=f'{atleta['nome']}')
+            atletaLbl.bind("<Button-1>",
+                           lambda event, id=atleta['_id']: self.editarAtleta(id, event))
+            atletaLbl.grid(row=index, column=1)
+            index += 1
+
 
     def editarAtleta(self, id, event) -> None:  # ! FIX
-        print(id)
+        atletaEditavel = self.controller.editarAtleta(id, event)
+        self.nomeEnt.delete(0, ctk.END)
+        self.flexibilidadeEnt.delete(0, ctk.END)
+        self.abdominaisEmUmMinEnt.delete(0, ctk.END)
+        self.arremecoDeBolaMedEnt.delete(0, ctk.END)
+        self.distEmSaltoHorzEnt.delete(0, ctk.END)
+
+        self.nomeEnt.insert(0, atletaEditavel['nome'])
+        self.flexibilidadeEnt.insert(0, atletaEditavel['flexibilidade'])
+        self.abdominaisEmUmMinEnt.insert(0, atletaEditavel['abdominaisEmUmMin'])
+        self.arremecoDeBolaMedEnt.insert(0, atletaEditavel['arremecoDeBolaMed'])
+        self.distEmSaltoHorzEnt.insert(0, atletaEditavel['distEmSaltoHorz'])
+
         return None
 
     def raiseInsertEdit(self, nome) -> None:  # TODO

@@ -13,5 +13,8 @@ class Controller:
         print(f'controller: {atleta}')
         return None
     
+    def editarAtleta(self, id, event):
+        return self.model.editarAtleta(id, event)
+    
     def sair(self, e) -> None:
         self.model.sair(e)

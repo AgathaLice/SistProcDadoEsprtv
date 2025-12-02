@@ -5,7 +5,7 @@ import pymongo
 
 class EloGetAll(Link):
 
-    def run(self, **kwargs) -> dict | None:
+    def run(self, **kwargs):
 
         if 'tabela' in kwargs:
             listaAtletas = list(kwargs['tabela'].find({},

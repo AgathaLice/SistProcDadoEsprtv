@@ -14,6 +14,7 @@ from Model.Elos.escalonarDados import EloEscala
 from Model.Elos.aplicarPeso import EloPeso
 from Model.Elos.InitKmeans import EloInitKmeans
 from Model.Elos.salvarTreino import EloSalvarTreino
+from Model.Elos.getOne import EloGetOne
 
 '''
 - #*verificar dados (opcional)
@@ -66,20 +67,23 @@ class Model:
                             tabelaGrafico=self.dadosGrafico,
                             tabelaBson=self.dadosBson)
 
-    def todosOsAtletas(self) -> list[dict]:
-        #!Find...
-        #! TEMPORÁRIO --=PARA TESTE=--
-        listagem = [{"_id": "a1", "nome": "nome1", "idade": 1}, {"_id": "a2", "nome": "nome2", "idade": 2},
-                    {"_id": "a3", "nome": "nome3", "idade": 3}, {
-                        "_id": "a4", "nome": "nome4", "idade": 4},
-                    {"_id": "a5", "nome": "nome5", "idade": 5}, {"_id": "a6", "nome": "nome6", "idade": 6}]
-
-        return listagem
+    def todosOsAtletas(self):
+        eloAll = EloGetAll(None)
+        
+        lista = eloAll.run(tabela=self.atletas)
+        if lista == None:
+            lista = {'listaAtletas': []}
+        lista = lista['listaAtletas']
+        return lista
 
     def salvar(self, atleta):
         tabela = self.atletas
         eloSalvar = EloSalvar(None)
         return eloSalvar.run(atleta=atleta, tabela=tabela)
+    
+    def editarAtleta(self, id, event):
+        eloUm = EloGetOne(None)
+        print(eloUm.run(tabela=self.atletas, id=id)) #TODO
 
     def sair(self, e) -> None:
         exit()
