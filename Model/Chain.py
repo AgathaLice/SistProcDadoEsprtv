@@ -9,11 +9,12 @@ class Link(ABC):
         return None
     
     @abstractmethod
-    def run(self, data):
+    def run(self, **kwargs):
         pass
 
+    def last(self, **kwargs):
+        if self.next == None:
+            return kwargs
+        else:
+            print("ERRO NO LAST")
 
-class Last(Link):
-    
-    def __init__(self, *args):
-        return args

@@ -77,9 +77,6 @@ class View():
         nomeFr = ctk.CTkFrame(self.insertEdit)
         nomeLbl = ctk.CTkLabel(nomeFr, text='Nome:')
         self.nomeEnt = ctk.CTkEntry(nomeFr)
-        idadeFr = ctk.CTkFrame(self.insertEdit)
-        idadeLbl = ctk.CTkLabel(idadeFr, text='Idade:')
-        self.idadeEnt = ctk.CTkEntry(idadeFr)
         flexFr = ctk.CTkFrame(self.insertEdit)
         flexibilidadeLbl = ctk.CTkLabel(flexFr, text='Flexibilidade:')
         self.flexibilidadeEnt = ctk.CTkEntry(flexFr)
@@ -105,9 +102,6 @@ class View():
         nomeFr.grid(row=1, column=0, sticky='nse')
         nomeLbl.pack()
         self.nomeEnt.pack()
-        idadeFr.grid(row=1, column=1)
-        idadeLbl.pack()
-        self.idadeEnt.pack()
         flexFr.grid(row=2, column=0, sticky='nse')
         flexibilidadeLbl.pack()
         self.flexibilidadeEnt.pack()
@@ -177,7 +171,7 @@ class View():
         index = 0
         for atleta in atletas:
             atletaLbl = ctk.CTkLabel(scrollFr,
-                                     text=f'{atleta['nome']} - {atleta['idade']} anos')
+                                     text=f'{atleta['nome']}')
             atletaLbl.bind("<Button-1>",
                            lambda event, id=atleta['_id']: self.editarAtleta(id, event))
             atletaLbl.grid(row=index, column=1)
@@ -191,7 +185,6 @@ class View():
     def salvar(self) -> None:
         atleta = Atleta(
             self.nomeEnt.get(),
-            self.idadeEnt.get(),
             self.flexibilidadeEnt.get(),
             self.abdominaisEmUmMinEnt.get(),
             self.arremecoDeBolaMedEnt.get(),
@@ -202,7 +195,6 @@ class View():
 
     def fecharInsert(self) -> None:
         self.nomeEnt.delete(0, ctk.END)
-        self.idadeEnt.delete(0, ctk.END)
         self.flexibilidadeEnt.delete(0, ctk.END)
         self.abdominaisEmUmMinEnt.delete(0, ctk.END)
         self.arremecoDeBolaMedEnt.delete(0, ctk.END)
@@ -222,13 +214,12 @@ class View():
 
 class Atleta:
 
-    def __init__(self, nome, idade,
+    def __init__(self, nome,
                  flexibilidade,
                  abdominaisEmUmMin,
                  arremecoDeBolaMed,
                  distEmSaltoHorz) -> None:
         self.nome = nome
-        self.idade = idade
         self.flexibilidade = flexibilidade
         self.abdominaisEmUmMin = abdominaisEmUmMin
         self.arremecoDeBolaMed = arremecoDeBolaMed

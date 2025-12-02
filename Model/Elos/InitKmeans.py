@@ -2,20 +2,26 @@
 from Model.Chain import Link
 from sklearn.cluster import KMeans
 
-'''
-    recebe todos os dados do elo npArrayAtletas,
-    inicializa o KMeans,
-    treina pela primeira vez com os dados recebidos no data,
-    passa os dados treinados para o salvarTrain
-'''
-
 class EloInitKmeans(Link):
 
-    def run(self, idsAtleta, npAtletas, escalAtletas):
+    def run(self, **kwargs):
 
-        kmeans = KMeans(n_clusters=0, random_state=0, n_init='auto')
-        kmeans.fit(escalAtletas)
-        
+        if ('idAtletas' and 'npAtletas' and 'escalAtletas' and 'escalonador') in kwargs:
+            kmeans = KMeans(n_clusters=2, random_state=42, n_init='auto')
+            kmeansSalvo = kmeans.fit(kwargs['escalAtletas'])
+            grupos = kmeans.labels_
+        else:
+            print('ERRO NA INICIALIZAÇÃO DO KMEANS')
 
-
-        return self.next.run()
+        if self.next != None:
+            return self.next.run(idAtletas=kwargs['idAtletas'],
+                                 npAtletas=kwargs['npAtletas'],
+                                 escalonador=kwargs['escalonador'],
+                                 grupos=grupos,
+                                 kmeansSalvo=kmeansSalvo)
+        else:
+            return self.last(idAtletas=kwargs['idAtletas'],
+                             npAtletas=kwargs['npAtletas'],
+                             escalonador=kwargs['escalonador'],
+                             grupos=grupos,
+                             kmeansSalvo=kmeansSalvo)

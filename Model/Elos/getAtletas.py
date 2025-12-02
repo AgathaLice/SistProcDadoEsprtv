@@ -5,16 +5,21 @@ import pymongo
 
 class EloGetAll(Link):
 
-    def run(self, tabela) -> list | None:
+    def run(self, **kwargs) -> dict | None:
 
-        listaAtletas = list(tabela.find({}, {'nome': 1,
-                                             'idade': 1,
-                                             'flexibilidade': 1,
-                                             'abdominais': 1,
-                                             'arremeco': 1,
-                                             'saltoHorizontal': 1
-                                             }
-                                       )
-                           )
+        if 'tabela' in kwargs:
+            listaAtletas = list(kwargs['tabela'].find({},
+                                                      {'nome': 1,
+                                                       'flexibilidade': 1,
+                                                       'abdominaisEmUmMin': 1,
+                                                       'arremecoDeBolaMed': 1,
+                                                       'distEmSaltoHorz': 1
+                                                       }
+                                                      )
+                                )
 
-        return self.next.run(listaAtletas)
+        if self.next != None:
+            return self.next.run(listaAtletas=listaAtletas)
+        else:
+            return self.last(listaAtletas=listaAtletas)
+

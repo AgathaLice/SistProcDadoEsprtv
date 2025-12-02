@@ -4,9 +4,18 @@ import pymongo
 
 class EloSalvar(Link):
 
-    def run(self, data, tabela):
+    def run(self, **kwargs):
 
-        atleta = data.__dict__
-        tabela.insert_one(atleta)
+        if ('atleta' and 'tabela') in kwargs:
+            atleta = kwargs['atleta'].__dict__
+            kwargs['tabela'].insert_one(atleta)
+            print(atleta)
+        else:
+            print("ERRO, FALTA KWARGS PARA SALVAR")
 
-        return self.next.run()
+        if self.next != None:
+            return self.next.run(atleta=kwargs['atleta'],
+                                 tabela=kwargs['tabela'])
+        else:
+            return self.last(atleta=kwargs['atleta'],
+                             tabela=kwargs['tabela'])

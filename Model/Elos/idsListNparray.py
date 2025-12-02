@@ -5,16 +5,20 @@ import numpy as np
 
 class EloNpArray(Link):
 
-    def run(self, listaAtletas):
+    def run(self, **kwargs):
 
-        idsAtleta = [atleta['_id'] for atleta in listaAtletas]
-        dadosAtleta = [[
-            atleta['flexibilidade'],
-            atleta['abdominais'],
-            atleta['arremeco'],
-            atleta['saltoHorizontal']]
-            for atleta in listaAtletas]
+        if 'listaAtletas' in kwargs:
+            idAtletas = [atleta['_id'] for atleta in kwargs['listaAtletas']]
+            dadosAtleta = [[
+                atleta['flexibilidade'],
+                atleta['abdominaisEmUmMin'],
+                atleta['arremecoDeBolaMed'],
+                atleta['distEmSaltoHorz']]
+                for atleta in kwargs['listaAtletas']]
 
-        npAtletas = np.array(dadosAtleta)
+            npAtletas = np.array(dadosAtleta)
 
-        return self.next.run(idsAtleta, npAtletas)
+        if self.next != None:
+            return self.next.run(idAtletas=idAtletas, npAtletas=npAtletas)
+        else:
+            return self.last(idAtletas=idAtletas, npAtletas=npAtletas)

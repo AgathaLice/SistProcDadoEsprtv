@@ -1,2 +1,2 @@
 
-from Model.Chain import Link, Last
+from Model.Chain import Link

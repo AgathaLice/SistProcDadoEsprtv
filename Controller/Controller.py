@@ -9,8 +9,8 @@ class Controller:
         return self.model.todosOsAtletas()
     
     def salvar(self, atleta) -> None:
-        # self.model.salvar(atleta)
-        print(atleta)
+        self.model.salvar(atleta)
+        print(f'controller: {atleta}')
         return None
     
     def sair(self, e) -> None:
