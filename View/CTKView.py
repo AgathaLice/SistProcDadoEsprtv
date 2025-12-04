@@ -212,7 +212,7 @@ class View():
             atletaLbl = ctk.CTkLabel(self.scrollFr,
                                      text=f'{atleta['nome']}')
             atletaLbl.bind("<Button-1>",
-                           lambda event, id=atleta['_id']: self.editarAtleta(id, event))
+                           lambda event, id=atleta['nome']: self.editarAtleta(id, event))
             atletaLbl.grid(row=index, column=1)
             index += 1
 

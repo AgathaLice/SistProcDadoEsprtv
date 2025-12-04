@@ -84,7 +84,7 @@ class Model:
 
     def editarAtleta(self, id, event):
         eloUm = EloGetOne(None)
-        print(eloUm.run(tabela=self.atletas, id=id))  # TODO
+        print(eloUm.run(tabela=self.dadosTreino, id=id))  # TODO
     
 
     def sair(self, e) -> None:

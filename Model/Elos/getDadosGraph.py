@@ -21,7 +21,8 @@ class EloGetDataGraph(Link):
             }
             kwargs['tabelaGrafico'].insert_one(dadosGrafico)
             dadosAtletas = list(kwargs['tabelaGrafico'].find({}))
-            
+
+            kwargs['tabelaGrafico'].delete_one({})
         else:
             print('ERRO NA BUSCA PARA GRAFICO')
 
