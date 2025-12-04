@@ -1,12 +1,8 @@
 
-class MyObject:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-        self.secret = "hiddenValue"
+from teste1 import EloUm
+from teste2 import EloDois
 
-obj = MyObject("Alice", 30)
+tes2 = EloDois(None)
+tes1 = EloUm(tes2)
 
-
-obj_dict_1 = obj.__dict__
-print(obj_dict_1)
+print(tes1.run(a="Arg"))

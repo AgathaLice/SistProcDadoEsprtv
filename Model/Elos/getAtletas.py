@@ -7,7 +7,9 @@ class EloGetAll(Link):
 
     def run(self, **kwargs):
 
-        if 'tabela' in kwargs:
+        if ('tabela' and
+            'tabelaGrafico' and
+            'tabelaBson') in kwargs:
             listaAtletas = list(kwargs['tabela'].find({},
                                                       {'nome': 1,
                                                        'flexibilidade': 1,
@@ -19,7 +21,11 @@ class EloGetAll(Link):
                                 )
 
         if self.next != None:
-            return self.next.run(listaAtletas=listaAtletas)
+            return self.next.run(listaAtletas=listaAtletas,
+                                 tabelaGrafico=kwargs['tabelaGrafico'],
+                                 tabelaBson=kwargs['tabelaBson'])
         else:
-            return self.last(listaAtletas=listaAtletas)
+            return self.last(listaAtletas=listaAtletas,
+                             tabelaGrafico=kwargs['tabelaGrafico'],
+                             tabelaBson=kwargs['tabelaBson'])
 

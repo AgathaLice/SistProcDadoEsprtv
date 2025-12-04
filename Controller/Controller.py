@@ -16,5 +16,8 @@ class Controller:
     def editarAtleta(self, id, event):
         return self.model.editarAtleta(id, event)
     
+    def getGrafico(self):
+        return self.model.getGrafico()
+    
     def sair(self, e) -> None:
         self.model.sair(e)

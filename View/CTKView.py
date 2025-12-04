@@ -1,6 +1,7 @@
 
 import customtkinter as ctk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from View.AtletaView import Atleta
 
 '''
 - Tela de menu,
@@ -10,7 +11,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 - Tela de listagem de users,
 - Tela de edição de dados.
 '''
-
 
 class View():
 
@@ -142,6 +142,12 @@ class View():
         self.data = ctk.CTkFrame(self.root)
         self.data.grid(row=0, column=0, sticky='nsew')
 
+        self.data.rowconfigure(0,
+                                weight=1)
+        self.data.columnconfigure(0,
+                                   weight=1)
+        self.grafico()
+
     def telaLista(self) -> None:
         self.lista = ctk.CTkFrame(self.root)
         self.lista.grid(row=0, column=0, sticky='nsew')
@@ -226,23 +232,17 @@ class View():
         self.distEmSaltoHorzEnt.insert(0, atletaEditavel['distEmSaltoHorz'])
 
         return None
+    
+    def grafico(self):
+        imagem = self.controller.getGrafico() 
+        canvaGrafico = FigureCanvasTkAgg(imagem, master=self.data)
+        tkGrafico = canvaGrafico.get_tk_widget()
+        tkGrafico.grid(row=0, column=0, sticky='nsew')
 
     def raiseInsertEdit(self, nome) -> None:  # TODO
         return None
 
     def sair(self, e=None) -> None:
+        self.root.destroy()
         self.controller.sair(e)
 
-
-class Atleta:
-
-    def __init__(self, nome,
-                 flexibilidade,
-                 abdominaisEmUmMin,
-                 arremecoDeBolaMed,
-                 distEmSaltoHorz) -> None:
-        self.nome = nome
-        self.flexibilidade = flexibilidade
-        self.abdominaisEmUmMin = abdominaisEmUmMin
-        self.arremecoDeBolaMed = arremecoDeBolaMed
-        self.distEmSaltoHorz = distEmSaltoHorz

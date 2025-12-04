@@ -6,7 +6,10 @@ class EloEscala(Link):
 
     def run(self, **kwargs):
 
-        if ('idAtletas' and 'npAtletas') in kwargs:
+        if ('idAtletas' and
+            'npAtletas' and
+            'tabelaGrafico' and
+            'tabelaBson') in kwargs:
             escalonador = StandardScaler()
             escalAtletas = escalonador.fit_transform(kwargs['npAtletas'])
         else:
@@ -15,10 +18,14 @@ class EloEscala(Link):
         if self.next != None:
             return self.next.run(idAtletas=kwargs['idAtletas'],
                                  npAtletas=kwargs['npAtletas'],
+                                 tabelaGrafico=kwargs['tabelaGrafico'],
+                                 tabelaBson=kwargs['tabelaBson'],
                                  escalAtletas=escalAtletas,
                                  escalonador=escalonador)
         else:
             return self.last(idAtletas=kwargs['idAtletas'],
                              npAtletas=kwargs['npAtletas'],
+                             tabelaGrafico=kwargs['tabelaGrafico'],
+                             tabelaBson=kwargs['tabelaBson'],
                              escalAtletas=escalAtletas,
                              escalonador=escalonador)

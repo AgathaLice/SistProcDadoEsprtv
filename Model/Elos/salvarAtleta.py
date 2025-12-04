@@ -6,7 +6,7 @@ class EloSalvar(Link):
 
     def run(self, **kwargs):
 
-        if ('atleta' and 'tabela') in kwargs:
+        if ('atleta' and 'tabela' and 'kmeans' and 'escal' and 'pca' and 'grafico') in kwargs:
             atleta = kwargs['atleta'].__dict__
             kwargs['tabela'].insert_one(atleta)
             print(atleta)
@@ -14,8 +14,16 @@ class EloSalvar(Link):
             print("ERRO, FALTA KWARGS PARA SALVAR")
 
         if self.next != None:
-            return self.next.run(atleta=kwargs['atleta'],
-                                 tabela=kwargs['tabela'])
+            return self.next.run(atleta=atleta,
+                                 tabela=kwargs['tabela'],
+                                 kmeans=kwargs['kmeans'],
+                                 escal=kwargs['escal'],
+                                 pca=kwargs['pca'],
+                                 grafico=kwargs['grafico'])
         else:
-            return self.last(atleta=kwargs['atleta'],
-                             tabela=kwargs['tabela'])
+            return self.last(atleta=atleta,
+                             tabela=kwargs['tabela'],
+                             kmeans=kwargs['kmeans'],
+                             escal=kwargs['escal'],
+                             pca=kwargs['pca'],
+                             grafico=kwargs['grafico'])
