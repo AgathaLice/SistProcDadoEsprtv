@@ -10,7 +10,7 @@ class EloNpArray(Link):
         if ('listaAtletas' and
             'tabelaGrafico' and
             'tabelaBson') in kwargs:
-            idAtletas = [atleta['_id'] for atleta in kwargs['listaAtletas']]
+            idAtletas = [atleta['nome'] for atleta in kwargs['listaAtletas']]
             dadosAtleta = [[
                 atleta['flexibilidade'],
                 atleta['abdominaisEmUmMin'],

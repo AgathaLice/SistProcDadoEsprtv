@@ -46,7 +46,7 @@ class View():
                                weight=3)
         self.menu.rowconfigure([1, 2, 3, 4],
                                weight=1)
-
+        queimada = ctk.CTkLabel(self.menu, text='Queimada')
         insert = ctk.CTkButton(self.menu, text='Novo Atleta',
                                command=lambda: self.insertEdit.tkraise())  # ! Mudar dps
         graph = ctk.CTkButton(self.menu, text='Abrir Gráfico',
@@ -56,7 +56,7 @@ class View():
         sair = ctk.CTkButton(self.menu, text='Sair',
                              command=lambda: self.sair())
 
-        #! Logo aq
+        queimada.grid(row=0, column=1)
         insert.grid(row=1, column=1)
         graph.grid(row=2, column=1)
         lista.grid(row=3, column=1)

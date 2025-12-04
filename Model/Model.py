@@ -64,7 +64,7 @@ class Model:
     def todosOsAtletas(self):
         eloGetAll = EloGetAll(None)
 
-        lista = eloGetAll.run(tabela=self.atletas,
+        lista = eloGetAll.run(tabela=self.dadosTreino,
                            tabelaGrafico=self.dadosGrafico,
                            tabelaBson=self.dadosBson)
         if lista == None:
@@ -73,7 +73,6 @@ class Model:
         return lista
 
     def salvar(self, atleta):
-        #updateKmeans = EloUpdateKmeans(None)
         eloSalvar = EloSalvar(None)
         return eloSalvar.run(atleta=atleta,
                              tabela=self.dadosTreino,
